@@ -1,7 +1,5 @@
-// Get the display element
 const display = document.getElementById('display');
 
-// 1. Core Calculator Functions
 function appendValue(val) {
     display.value += val;
 }
@@ -17,63 +15,40 @@ function deleteLast() {
 function calculate() {
     try {
         if (display.value) {
-            // Evaluates the math expression string safely from input
-            display.value = eval(display.value);
+            // Replaces the basic display percent symbol context logic mapping safely
+            let expression = display.value.replace(/%/g, '/100');
+            display.value = eval(expression);
         }
     } catch (error) {
         display.value = 'Error';
-        setTimeout(clearDisplay, 1500);
+        setTimeout(clearDisplay, 1300);
     }
 }
 
-// 2. Premium UI/UX Keyboard Interactions Map
+// Global active keyboard event mapping trackers
 const keyMap = {
-    'Enter': '=',
-    '=': '=',
-    'Backspace': '⌫',
-    'Escape': 'C',
-    '+': '+',
-    '-': '-',
-    '*': '*',
-    '/': '/',
-    '.': '.'
+    'Enter': '=', '=': '=', 'Backspace': '⌫', 'Escape': 'C',
+    '+': '+', '-': '-', '*': '*', '/': '/', '.': '.', '%': '%'
 };
 
-// Listen for global keyboard presses
 document.addEventListener('keydown', function(event) {
     const key = event.key;
-    
-    // Check if the pressed key matches a number or an operator map item
     let buttonLabel = keyMap[key] || ((key >= '0' && key <= '9') ? key : null);
 
     if (buttonLabel) {
-        event.preventDefault(); // Prevents browser defaults like page scrolling
+        event.preventDefault();
+        if ((key >= '0' && key <= '9') || key === '.') appendValue(key);
+        else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '%') appendValue(key);
+        else if (key === 'Enter' || key === '=') calculate();
+        else if (key === 'Backspace') deleteLast();
+        else if (key === 'Escape') clearDisplay();
 
-        // Run the math logic based on the key pressed
-        if ((key >= '0' && key <= '9') || key === '.') {
-            appendValue(key);
-        } else if (key === '+' || key === '-' || key === '*' || key === '/') {
-            appendValue(key);
-        } else if (key === 'Enter' || key === '=') {
-            calculate();
-        } else if (key === 'Backspace') {
-            deleteLast();
-        } else if (key === 'Escape') {
-            clearDisplay();
-        }
-
-        // Animate the matching UI button to mimic a physical mouse click
+        // Trigger tactical highlight action pulse
         const buttons = document.querySelectorAll('button');
         buttons.forEach(btn => {
             if (btn.innerText === buttonLabel) {
-                btn.style.transform = 'scale(0.95) translateY(1px)';
-                btn.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
-                
-                // Snap the button back to normal style after 100ms
-                setTimeout(() => {
-                    btn.style.transform = '';
-                    btn.style.backgroundColor = '';
-                }, 100);
+                btn.style.transform = 'scale(0.94)';
+                setTimeout(() => btn.style.transform = '', 90);
             }
         });
     }

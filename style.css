@@ -1,13 +1,9 @@
 :root {
-    --bg-dark: #090d16;
-    --panel-bg: rgba(15, 23, 42, 0.65);
-    --btn-num: rgba(30, 41, 59, 0.5);
-    --btn-num-hover: rgba(47, 61, 85, 0.75);
-    --btn-op: rgba(59, 130, 246, 0.15);
-    --btn-op-hover: rgba(59, 130, 246, 0.3);
-    --accent-blue: #3b82f6;
-    --accent-glow: #60a5fa;
-    --danger: #ef4444;
+    --bg-phone: #A9BCE2;        /* Matches your soft light-blue canvas frame background */
+    --panel-color: #6C8BCB;    /* Matches your mid-tone blue glass container element */
+    --btn-bg: #D9D9D9;         /* Matches your light-grey tactile button fill color */
+    --text-dark: #000000;      /* Contrast coloring for labels */
+    --btn-active: #BFC5CD;     /* Darker grey shift when user actively taps a button */
 }
 
 body {
@@ -15,112 +11,70 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(-45deg, #090d16, #111827, #1e3a8a, #090d16);
-    background-size: 400% 400%;
-    animation: gradientAnimation 12s ease infinite;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-phone);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     margin: 0;
 }
 
-@keyframes gradientAnimation {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 .calculator {
-    background-color: var(--panel-bg);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 28px;
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(59, 130, 246, 0.1);
-    width: 320px;
+    background-color: var(--panel-color);
+    padding: 24px;
+    border-radius: 28px;       /* Extracted from your Figma container corner radius */
+    width: 340px;              /* Extracted from your exact panel W value width code */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
 #display {
     width: 100%;
-    height: 75px;
-    background-color: rgba(5, 8, 15, 0.8);
-    border: 1px solid rgba(59, 130, 246, 0.25);
-    border-radius: 16px;
-    margin-bottom: 24px;
-    color: var(--accent-glow);
-    font-size: 2.4rem;
-    font-weight: 300;
+    height: 80px;
+    background-color: transparent;
+    border: none;
+    color: #3b5998;            /* Dark elegant blue font styling matching your 145 text */
+    font-size: 3rem;
+    font-weight: 300;          /* Sleek light font rendering weight context */
     text-align: right;
-    padding: 0 20px;
+    padding: 0 12px;
     box-sizing: border-box;
-    text-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
     outline: none;
-    transition: border-color 0.2s ease;
-}
-
-#display:focus {
-    border-color: var(--accent-blue);
+    margin-bottom: 16px;
 }
 
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    gap: 14px;                 /* Matches your exact uniform layout gap rows in Figma */
 }
 
 button {
-    padding: 18px 0;
-    font-size: 1.35rem;
-    font-weight: 500;
+    height: 68px;              /* Matches your exact H value layout height specs */
+    font-size: 1.6rem;
+    font-weight: 400;
     cursor: pointer;
     border: none;
-    border-radius: 16px;
-    background-color: var(--btn-num);
-    color: #f1f5f9;
-    /* Micro-interactions: snappy transitions make buttons feel responsive */
-    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    border-radius: 16px;       /* Matches your custom curved button radius */
+    background-color: var(--btn-bg);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.08s ease, background-color 0.1s ease;
     user-select: none;
 }
 
-button:hover {
-    background-color: var(--btn-num-hover);
-    transform: translateY(-2px);
-}
-
-/* Tactile Click Effect: shrinks slightly when clicked, simulating a real button push */
+/* Micro-interaction: visual click feedback layout animation hook */
 button:active {
-    transform: translateY(1px) scale(0.97);
+    transform: scale(0.94);
+    background-color: var(--btn-active);
 }
 
-.btn-operator {
-    color: var(--accent-glow);
-    background-color: var(--btn-op);
+/* Base style class assignments to support potential custom operator highlight colors */
+.btn-clear, .btn-util, .btn-operator, .btn-equal {
+    background-color: var(--btn-bg);
+    color: var(--text-dark);
 }
 
-.btn-operator:hover {
-    background-color: var(--btn-op-hover);
-}
-
-.btn-clear {
-    color: var(--danger);
-    background-color: rgba(239, 68, 68, 0.1);
-}
-
-.btn-clear:hover {
-    background-color: rgba(239, 68, 68, 0.25);
-}
-
-.btn-equal {
-    grid-row: span 2;
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    color: white;
-    font-size: 1.6rem;
-}
-
-.btn-equal:hover {
-    background: linear-gradient(135deg, #60a5fa, #3b82f6);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-}
-
+/* Stretches the zero key cleanly across two grid columns to match your mockup design layout */
 .btn-zero {
     grid-column: span 2;
 }
